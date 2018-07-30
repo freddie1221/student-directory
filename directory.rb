@@ -24,9 +24,11 @@ def print_header
   puts "-------------"
 end
 
-def print(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+def print_shorter_than_12(students)
+  students.each_with_index do |student, index|
+    if student[:name].length < 12
+      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
@@ -36,5 +38,5 @@ end
 
 students = input_students
 print_header
-print(students)
+print_shorter_than_12(students)
 print_footer(students)
