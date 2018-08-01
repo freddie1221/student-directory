@@ -1,52 +1,57 @@
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
+
   # create an empty array
+  possible_cohorts = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   students = []
+  cohort = ""
   # get the first name
-  name = gets.chomp.capitalize
-  puts "Now please enter the cohort"
-  cohort = gets.chomp.to_sym
-  # while the name is not empty, repeat this code
-  until name.empty? do
+  while true do
+    puts "Please enter the name of the student"
+    name = gets.chomp
+    if name == ""
+      break
+    end
+
+    puts "Please enter the cohort of the student"
+    while true do
+      cohort = gets.chomp.capitalize.to_sym
+      if possible_cohorts.include?(cohort.to_s)
+        break
+      else
+        puts "Cohort not recognised, please input again"
+      end
+    end
+
+    puts "please enter the age of the student"
+    age = gets.chomp.to_i
+
     # add the student hash to the array
-    students << {name: name, cohort: cohort}
+    students << {name: name, cohort: cohort, age: age}
     puts "Now we have #{students.count} students"
-    # get another name from the user
-    name = gets.chomp.capitalize
-    puts "Now please enter the cohort"
-    cohort = gets.chomp.to_sym
+    puts "--------"
+
   end
   # return the array of students
   students
 end
-
 
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
 
-def print_array(array)
-  print array
-end
-
-
-def print_formatted(students)
-  counter = 0
-  until students[counter] == nil do
-    puts "#{counter + 1}. #{students[counter][:name].center(15)} (#{students[counter][:cohort]} cohort)"
-    counter += 1
+def print(students)
+  students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
-
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+def print_footer(students)
+  puts "Overall, we have #{students.count} great students"
 end
 
 students = input_students
+#nothing happens until we call the methods
 print_header
-print_array(students)
-# print_formatted(students)
-# print_footer(students)
+print(students)
+print_footer(students)
